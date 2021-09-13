@@ -28,6 +28,8 @@ validation_ds = tf.keras.preprocessing.image_dataset_from_directory(
     image_size=(image_height, image_width),
     batch_size=batch_size)
 
+class_names = train_ds.class_names
+
 # configure the dataset
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
@@ -100,3 +102,5 @@ prediction = model.predict(image_array)
 score = tf.nn.softmax(prediction[0])
 print("This image most likely belong to {}, with the accuracy {:.2f} persent"
       .format(class_names[np.argmax(score)], 100*np.max(score)))
+
+# well done our random image predicted correctly with the 98% accuracy
